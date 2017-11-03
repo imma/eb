@@ -5,9 +5,11 @@ set -efu
 function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
 
-  block compile virtualenv
+  cd "$shome"
   mkdir -p "$shome/bin"
-  ln -nfs ../vendor/virtualenv/bin/{eb,ebp} "$shome/bin/"
+
+  block compile pipenv
+  ln -nfs $(pipenv run which eb ebp) "$shome/bin/"
 }
 
 main "$@"
